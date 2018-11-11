@@ -27,8 +27,8 @@ namespace Assignment2
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-
+                options.UseSqlServer(Configuration.GetConnectionString("AzureDbConnection")));
+            services.AddDbContext<BookDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDbConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
