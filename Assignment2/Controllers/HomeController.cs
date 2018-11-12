@@ -10,18 +10,26 @@ using Microsoft.AspNetCore.Authorization;
 using Assignment2.Services;
 using System.Net.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
 
 namespace Assignment2.Controllers
 {
     public class HomeController : Controller
     {
+        #region private variables
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger _logger;
+        private readonly IConfiguration _configuration;
+        private readonly IOchestraApi _ochestraApi;
+        #endregion
+
         public HomeController(IHttpClientFactory httpClientFactory,
-            ILogger<HomeController> logger)
+            ILogger<HomeController> logger, IConfiguration configuration,IOchestraApi ochestraApi)
         {
             _httpClientFactory = httpClientFactory;
             _logger = logger;
+            _configuration = configuration;
+            _ochestraApi = ochestraApi;
         }
 
         [Authorize]
@@ -29,9 +37,13 @@ namespace Assignment2.Controllers
         public async Task<IActionResult> Index()
         {
             var client = _httpClientFactory.CreateClient();
-            var result = await client.GetStringAsync("http://www.google.com");
-            Ok(result);
-            _logger.LogInformation(result);
+            var APIUrl = _configuration.GetValue<string>("ExternalAPIUrl");
+            _logger.LogInformation("External API Url:{0}",APIUrl);
+            var jsonObjects = await client.GetStringAsync(APIUrl);
+            _logger.LogInformation("jsonObjects, {0}", jsonObjects);
+
+            var photos = _ochestraApi.AddPhotosToDb(jsonObjects);
+            
             return View();
         }
 

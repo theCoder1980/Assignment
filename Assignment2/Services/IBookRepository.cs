@@ -7,5 +7,6 @@ namespace Assignment2.Services
 {
     public interface IBookRepository
     {
+
     }
 }
