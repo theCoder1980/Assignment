@@ -13,6 +13,11 @@ namespace Assignment2.Services
         /// Add photos
         /// </summary>
         /// <returns></returns>
-        Task<bool> AddPhotosToDb(string photos); 
+        bool AddPhotosToDb(string photos);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+         IEnumerable<Photo> GetPhotos();
     }
 }

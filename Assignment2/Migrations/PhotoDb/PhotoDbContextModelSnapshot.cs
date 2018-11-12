@@ -22,23 +22,22 @@ namespace Assignment2.Migrations.PhotoDb
 
             modelBuilder.Entity("Assignment2.Entities.Photo", b =>
                 {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasMaxLength(50);
+                    b.Property<int>("id");
 
                     b.Property<int>("albumId")
-                        .HasMaxLength(30);
+                        .HasMaxLength(100);
 
                     b.Property<string>("thumbnailUrl")
                         .IsRequired()
-                        .HasMaxLength(50);
+                        .HasMaxLength(100);
 
                     b.Property<string>("title")
                         .IsRequired()
-                        .HasMaxLength(30);
+                        .HasMaxLength(100);
+
+                    b.Property<string>("url")
+                        .IsRequired()
+                        .HasMaxLength(100);
 
                     b.HasKey("id");
 

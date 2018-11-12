@@ -27,7 +27,9 @@ namespace Assignment2.Services
         /// <param name="photo"></param>
         public void AddPhoto(Photo photo)
         {
+           
             _photoDbContext.Photos.Add(photo);
+            
         }
         /// <summary>
         /// Get Photos
@@ -35,7 +37,7 @@ namespace Assignment2.Services
         /// <returns></returns>
         public IEnumerable<Photo> GetPhotos()
         {
-            return _photoDbContext.Photos.OrderBy(p => p.title.ToList());
+            return _photoDbContext.Photos.OrderBy(p => p.title);
         }
 
         public bool PhotoExists(int Id)

@@ -1,34 +1,28 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Assignment2.Entities
+namespace Assignment2.Models
 {
-    /// <summary>
-    /// Photo entity object  model
-    /// </summary>
-
-    public class Photo
+    public class PhotoViewModel
     {
+
         /// <summary>
         /// The unique Id of the book
         /// </summary>
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+     
         public int id { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         [Required]
-        [MaxLength(100)]
+       
         public int albumId { get; set; }
 
-       
+
         /// <summary>
         /// The title of the photo
         /// </summary>
