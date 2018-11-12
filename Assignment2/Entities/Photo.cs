@@ -44,6 +44,6 @@ namespace Assignment2.Entities
         /// </summary>
         [Required]
         [MaxLength(50)]
-        public string ThumbnailUrl { get; set; }
+        public string thumbnailUrl { get; set; }
     }
 }

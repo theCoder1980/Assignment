@@ -32,5 +32,6 @@ namespace Assignment2.Services
         /// <param name="Id"></param>
         /// <returns></returns>
         bool PhotoExists(int Id);
+       
     }
 }

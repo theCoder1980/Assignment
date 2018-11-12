@@ -15,20 +15,27 @@ namespace Assignment2.Services
     public class OchestraApi : IOchestraApi
     {
         private readonly ILogger _logger;
-        public OchestraApi(ILogger<OchestraApi> logger)
+        private readonly IPhotoRepository _photoRepository;
+        public OchestraApi(ILogger<OchestraApi> logger,IPhotoRepository photoRepository)
         {
             _logger = logger;
+            _photoRepository = photoRepository;
         }
         private readonly IList<Photo> _photos;
         /// <summary>
         /// Add photos to database
+        /// https://jsonplaceholder.typicode.com/photos
         /// </summary>
         /// <param name="photos"></param>
         /// <returns></returns>
         public Task<bool> AddPhotosToDb(string photos)
         {
             try {
-                var user = JsonConvert.DeserializeObject<List<Photo>>(photos);
+                var Photos = JsonConvert.DeserializeObject<List<Photo>>(photos);
+                if(Photos.Count <= 0)
+                    _logger.LogInformation("Photo json object return 0 count:{0}", Photos);
+
+                Photos.ForEach(item => _photoRepository.AddPhoto(item));
             }
             catch(Exception ex)
             {

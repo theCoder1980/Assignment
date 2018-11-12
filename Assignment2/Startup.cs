@@ -37,6 +37,7 @@ namespace Assignment2
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IOchestraApi, OchestraApi>();
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddHttpClient();
             services.AddMvc();
         }
