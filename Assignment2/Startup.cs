@@ -14,7 +14,8 @@ using Assignment2.Services;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
-
+using Assignment2.Tasks;
+using Microsoft.Extensions.Hosting;
 namespace Assignment2
 {
     public class Startup
@@ -39,21 +40,23 @@ namespace Assignment2
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-
+            
             services.AddAuthentication().AddGoogle(googleOptions =>
             {
                 googleOptions.ClientId = Configuration["GoogleCredential:ClientId"];
                 googleOptions.ClientSecret = Configuration["GoogleCredential:ClientSecret"];
             });
-
+            services.AddSingleton<IHostedService, PeriodicallyDownloadTask>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddScoped<IOchestraApi, OchestraApi>();
-            services.AddScoped<IPhotoRepository, PhotoRepository>();
+            services.AddTransient<IPhotoRepository, PhotoRepository>();
             services.AddHttpClient();
             
             services.AddMvc();
-           
+            
+
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
