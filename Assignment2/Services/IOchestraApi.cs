@@ -19,6 +19,6 @@ namespace Assignment2.Services
         /// 
         /// </summary>
         /// <returns></returns>
-         IEnumerable<Photo> GetPhotos(PhotoFilterParams photoFilterParams);
+         IEnumerable<Photo> GetPhotos(int page , int pageSize);
     }
 }

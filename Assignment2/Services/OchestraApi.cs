@@ -55,9 +55,9 @@ namespace Assignment2.Services
             return status;
         }
 
-        public IEnumerable<Photo> GetPhotos(PhotoFilterParams photoFilterParams)
+        public IEnumerable<Photo> GetPhotos(int page , int pageSize )
         {
-            return _photoRepository.GetPhotos(photoFilterParams);
+            return _photoRepository.GetPhotos(page,pageSize);
         }
 
         

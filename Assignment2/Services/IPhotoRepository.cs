@@ -16,7 +16,7 @@ namespace Assignment2.Services
         /// Get list of the photos from db
         /// </summary>
         /// <returns>List of photo</returns>
-        IEnumerable<Photo> GetPhotos(PhotoFilterParams photoFilterParams);
+        IEnumerable<Photo> GetPhotos(int page , int pageSize);
         /// <summary>
         /// Add new photo into db
         /// </summary>

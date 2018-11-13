@@ -33,16 +33,17 @@ namespace Assignment2.Services
             
         }
        /// <summary>
-       /// Get photos by filtering with paging data
+       /// 
        /// </summary>
-       /// <param name="photoFilterParams">filter parameters</param>
+       /// <param name="page"></param>
+       /// <param name="pageSize"></param>
        /// <returns></returns>
-        public IEnumerable<Photo> GetPhotos(PhotoFilterParams photoFilterParams)
+        public IEnumerable<Photo> GetPhotos(int page , int pageSize )
         {
             return _photoDbContext.Photos.OrderBy(p => p.id).
                   ThenBy(p => p.albumId).
-                  Skip(photoFilterParams.PageSize * (photoFilterParams.PageNumber - 1)).
-                  Take(photoFilterParams.PageSize).
+                  Skip(pageSize * (page - 1)).
+                  Take(pageSize).
                   ToList();
                   
         }

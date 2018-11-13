@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Assignment2.Data;
 using Assignment2.Models;
 using Assignment2.Services;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
+
 
 namespace Assignment2
 {
@@ -35,11 +37,14 @@ namespace Assignment2
                 .AddDefaultTokenProviders();
 
             // Add application services.
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IOchestraApi, OchestraApi>();
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddHttpClient();
+            
             services.AddMvc();
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
