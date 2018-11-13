@@ -1,6 +1,9 @@
-﻿using Assignment2.Entities;
+﻿using Assignment2.Data;
+using Assignment2.Entities;
 using Assignment2.Services;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -23,19 +26,20 @@ namespace Assignment2.Tasks
             private Timer _timer;
             private readonly IHttpClientFactory _httpClientFactory;
             private readonly IConfiguration _configuration;
-         
-            /// <summary>
-            /// Constructor
-            /// </summary>
-            /// <param name="logger"></param>
-            public PeriodicallyDownloadTask(ILogger<PeriodicallyDownloadTask> logger, IHttpClientFactory httpClientFactory,
-                IConfiguration configuration)
+            private readonly IServiceProvider _provider;
+        /// Constructor
+        /// </summary>
+        /// <param name="logger"></param>
+        public PeriodicallyDownloadTask(ILogger<PeriodicallyDownloadTask> logger, IHttpClientFactory httpClientFactory,
+                IConfiguration configuration, IServiceProvider serviceProvider)
             {
                 _logger = logger;
                 _httpClientFactory = httpClientFactory;
                 _configuration = configuration;
-           
-            }
+                _provider = serviceProvider;
+
+
+        }
             /// <summary>
             /// Starting the task
             /// </summary>
@@ -59,21 +63,31 @@ namespace Assignment2.Tasks
                 _logger.LogInformation("Timed Background Service is working.");
                 try
                 {
-                    var client = _httpClientFactory.CreateClient();
-                    var aPIUrl = _configuration.GetValue<string>("ExternalAPIUrl");
-                    _logger.LogInformation("External API Url:{0}", aPIUrl);
-                    var jsonObjects = await client.GetStringAsync(aPIUrl);
-                    _logger.LogInformation("jsonObjects, {0}", jsonObjects);
 
-                    var Photos = JsonConvert.DeserializeObject<List<Photo>>(jsonObjects);
-                    if (Photos.Count <= 0)
-                        _logger.LogInformation("Photo json object return 0 count:{0}", Photos);
+                    using (IServiceScope scope = _provider.CreateScope())
+                    {
+                        var context = scope.ServiceProvider.GetRequiredService<PhotoDbContext>();
+                        var photos = context.Photos.AsNoTracking().Any();
 
-                    //Photos.ForEach(item => _photoRepository.AddPhoto(item));
-                    //_photoRepository.Save();
+                    if (!photos)
+                    {
 
+                        var client = _httpClientFactory.CreateClient();
+                        var aPIUrl = _configuration.GetValue<string>("ExternalAPIUrl");
+                        _logger.LogInformation("External API Url:{0}", aPIUrl);
+                        var jsonObjects = await client.GetStringAsync(aPIUrl);
+                        _logger.LogInformation("jsonObjects, {0}", jsonObjects);
 
+                        var Photos = JsonConvert.DeserializeObject<List<Photo>>(jsonObjects);
+                        if (Photos.Count <= 0)
+                            _logger.LogInformation("Photo json object return 0 count:{0}", Photos);
+
+                        Photos.ForEach(item => context.Photos.Add(item));
+                        context.SaveChanges();
+
+                    }
                 }
+             }
                 catch (Exception ex)
                 {
 

@@ -46,10 +46,11 @@ namespace Assignment2
                 googleOptions.ClientId = Configuration["GoogleCredential:ClientId"];
                 googleOptions.ClientSecret = Configuration["GoogleCredential:ClientSecret"];
             });
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddSingleton<IHostedService, PeriodicallyDownloadTask>();
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IPhotoRepository, PhotoRepository>();
+            
             services.AddHttpClient();
             
             services.AddMvc();
