@@ -55,7 +55,7 @@ namespace Assignment2
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+            app.UseDeveloperExceptionPage();
             app.UseStaticFiles();
 
             app.UseAuthentication();

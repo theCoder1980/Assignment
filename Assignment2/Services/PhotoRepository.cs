@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Assignment2.Data;
 using Assignment2.Entities;
+using Assignment2.Helpers;
 
 namespace Assignment2.Services
 {
@@ -31,13 +32,19 @@ namespace Assignment2.Services
             _photoDbContext.Photos.Add(photo);
             
         }
-        /// <summary>
-        /// Get Photos
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<Photo> GetPhotos()
+       /// <summary>
+       /// Get photos by filtering with paging data
+       /// </summary>
+       /// <param name="photoFilterParams">filter parameters</param>
+       /// <returns></returns>
+        public IEnumerable<Photo> GetPhotos(PhotoFilterParams photoFilterParams)
         {
-            return _photoDbContext.Photos.OrderBy(p => p.title);
+            return _photoDbContext.Photos.OrderBy(p => p.title).
+                  ThenBy(p => p.albumId).
+                  Skip(photoFilterParams.PageSize * (photoFilterParams.PageNumber - 1)).
+                  Take(photoFilterParams.PageSize).
+                  ToList();
+                  
         }
 
         public bool PhotoExists(int Id)

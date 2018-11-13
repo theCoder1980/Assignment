@@ -1,4 +1,5 @@
 ﻿using Assignment2.Entities;
+using Assignment2.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Assignment2.Services
         /// Get list of the photos from db
         /// </summary>
         /// <returns>List of photo</returns>
-        IEnumerable<Photo> GetPhotos();
+        IEnumerable<Photo> GetPhotos(PhotoFilterParams photoFilterParams);
         /// <summary>
         /// Add new photo into db
         /// </summary>

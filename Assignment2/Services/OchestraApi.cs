@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Assignment2.Entities;
+using Assignment2.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
@@ -54,9 +55,9 @@ namespace Assignment2.Services
             return status;
         }
 
-        public IEnumerable<Photo> GetPhotos()
+        public IEnumerable<Photo> GetPhotos(PhotoFilterParams photoFilterParams)
         {
-            return _photoRepository.GetPhotos();
+            return _photoRepository.GetPhotos(photoFilterParams);
         }
 
         

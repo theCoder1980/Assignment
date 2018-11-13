@@ -11,6 +11,7 @@ using Assignment2.Services;
 using System.Net.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Assignment2.Helpers;
 
 namespace Assignment2.Controllers
 {
@@ -34,21 +35,21 @@ namespace Assignment2.Controllers
 
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(PhotoFilterParams photoFilterParams)
         {
-            //var photos = _ochestraApi.GetPhotos().ToList();
-            //if (photos.Count <= 0)
-            //{
-            //    var client = _httpClientFactory.CreateClient();
-            //var APIUrl = _configuration.GetValue<string>("ExternalAPIUrl");
-            //_logger.LogInformation("External API Url:{0}",APIUrl);
-            //var jsonObjects = await client.GetStringAsync(APIUrl);
-            //_logger.LogInformation("jsonObjects, {0}", jsonObjects);
-            
-            
-            //    //Check if data loaded and skip this action
-            //    _ochestraApi.AddPhotosToDb(jsonObjects);
-            //}
+            var photos = _ochestraApi.GetPhotos(photoFilterParams).ToList();
+            if (photos.Count <= 0)
+            {
+                var client = _httpClientFactory.CreateClient();
+                var APIUrl = _configuration.GetValue<string>("ExternalAPIUrl");
+                _logger.LogInformation("External API Url:{0}", APIUrl);
+                var jsonObjects = await client.GetStringAsync(APIUrl);
+                _logger.LogInformation("jsonObjects, {0}", jsonObjects);
+
+
+                //Check if data loaded and skip this action
+                _ochestraApi.AddPhotosToDb(jsonObjects);
+            }
 
             return View();
         }

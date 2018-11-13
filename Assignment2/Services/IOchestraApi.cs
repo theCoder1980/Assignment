@@ -1,4 +1,5 @@
 ﻿using Assignment2.Entities;
+using Assignment2.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,6 @@ namespace Assignment2.Services
         /// 
         /// </summary>
         /// <returns></returns>
-         IEnumerable<Photo> GetPhotos();
+         IEnumerable<Photo> GetPhotos(PhotoFilterParams photoFilterParams);
     }
 }
