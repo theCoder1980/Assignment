@@ -1,6 +1,53 @@
-﻿@model Assignment2.Models.PhotoViewModel;
+﻿@model List<PhotoViewModel>;
 @{
     ViewData["Title"] = "Home Page";
 }
 
+<h2>Photo Album</h2>
+<div class="container">
+
+    @foreach (var item in Model)
+    {
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 portfolio-item">
+                <div class="card h-100">
+                    <a href="#"><img class="card-img-top" src="@item.thumbnailUrl" alt=""></a>
+                    <div class="card-body">
+                        <h4 class="card-title">
+                            <a href="@item.url">@item.title</a>
+                        </h4>
+                        <p class="card-text">@item.title</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    }
+</div>
+<ul class="pagination justify-content-center">
+    <li class="page-item">
+        <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+        </a>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="#">1</a>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="#">2</a>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="#">3</a>
+    </li>
+    <li class="page-item">
+        <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+        </a>
+    </li>
+</ul>
+
+    </div>
 

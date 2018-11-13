@@ -39,7 +39,7 @@ namespace Assignment2.Services
        /// <returns></returns>
         public IEnumerable<Photo> GetPhotos(PhotoFilterParams photoFilterParams)
         {
-            return _photoDbContext.Photos.OrderBy(p => p.title).
+            return _photoDbContext.Photos.OrderBy(p => p.id).
                   ThenBy(p => p.albumId).
                   Skip(photoFilterParams.PageSize * (photoFilterParams.PageNumber - 1)).
                   Take(photoFilterParams.PageSize).

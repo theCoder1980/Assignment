@@ -55,11 +55,15 @@ namespace Assignment2
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-            app.UseDeveloperExceptionPage();
+            
             app.UseStaticFiles();
 
             app.UseAuthentication();
+            AutoMapper.Mapper.Initialize(cfg =>
+            {
+                cfg.CreateMap<Entities.Photo, PhotoViewModel>();
 
+            });
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
