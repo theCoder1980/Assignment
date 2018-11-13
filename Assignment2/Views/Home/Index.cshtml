@@ -7,7 +7,11 @@
 
 <h2>Photo Album</h2>
 <div class="container">
-
+    <tr>
+        <td align="left" colspan="5">
+            <pager list="@Model" asp-controller="Home" asp-action="Index"></pager>
+        </td>
+    </tr>
     @foreach (var item in Model)
     {
         <div class="row">
@@ -27,11 +31,11 @@
 
     }
 
-  <tr>
-      <td align="left" colspan="5">
-          <pager list="@Model" asp-controller="Home" asp-action="Index" ></pager>
-      </td>
-  </tr>
+    <tr>
+        <td align="left" colspan="5">
+            <pager list="@Model" asp-controller="Home" asp-action="Index"></pager>
+        </td>
+    </tr>
 </div>
 
 

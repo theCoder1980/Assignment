@@ -12,7 +12,8 @@ using Assignment2.Data;
 using Assignment2.Models;
 using Assignment2.Services;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 
 namespace Assignment2
 {
@@ -28,6 +29,8 @@ namespace Assignment2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add application services.
+         
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AzureDbConnection")));
             services.AddDbContext<BookDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDbConnection")));
@@ -36,7 +39,13 @@ namespace Assignment2
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            // Add application services.
+
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["GoogleCredential:ClientId"];
+                googleOptions.ClientSecret = Configuration["GoogleCredential:ClientSecret"];
+            });
+
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddScoped<IOchestraApi, OchestraApi>();
