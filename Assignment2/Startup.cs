@@ -34,7 +34,7 @@ namespace Assignment2
          
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("AzureDbConnection")));
-            services.AddDbContext<BookDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDbConnection")));
+
             services.AddDbContext<PhotoDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("AzureDbConnection")));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
