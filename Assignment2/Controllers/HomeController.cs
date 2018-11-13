@@ -16,6 +16,9 @@ using AutoMapper;
 
 namespace Assignment2.Controllers
 {
+    /// <summary>
+    /// The main landing page controller
+    /// </summary>
     public class HomeController : Controller
     {
         #region private variables
@@ -53,14 +56,14 @@ namespace Assignment2.Controllers
 
             return View(model);
         }
-
+        [Authorize]
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
 
             return View();
         }
-
+        [Authorize]
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
