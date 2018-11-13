@@ -50,7 +50,7 @@ namespace Assignment2.Tasks
                 _logger.LogInformation("Timed Background Service is starting.");
 
                 _timer = new Timer(DoWork, null, TimeSpan.Zero,
-                    TimeSpan.FromMinutes(1));
+                    TimeSpan.FromDays(1));
 
                 return Task.CompletedTask;
             }
